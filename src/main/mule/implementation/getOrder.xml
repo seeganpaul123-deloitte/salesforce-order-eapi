@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce-order-process-api="http://www.mulesoft.org/schema/mule/salesforce-order-process-api" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce-order-process-api http://www.mulesoft.org/schema/mule/salesforce-order-process-api/current/mule-salesforce-order-process-api.xsd">
+	<flow name="getOrderFlow" doc:id="46fe0989-e8b2-46ef-aaf5-0c6059da5bbd" >
+		<logger level="INFO" doc:name="Logger" doc:id="be729372-80e0-4b83-8a50-399b69e4e724" message="started executing getOrder flow"/>
+		<salesforce-order-process-api:get-order-by-username doc:name="Get order by username" doc:id="eca84f99-7d45-4cd3-907a-5021dc1aedf2" config-ref="Salesforce_order_process_api_Config" username="#[attributes.uriParams.username]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a9a1eba2-fc21-4485-9658-e3df51a0cfbf" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="29e85fff-0f83-4517-b7ee-11c4de7843c6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="f6314212-0ad2-472d-a0f7-683bb703f307" message="finished executing getOrder flow"/>
+	</flow>
+</mule>

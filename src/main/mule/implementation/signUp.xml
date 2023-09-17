@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:user-registration-system-api="http://www.mulesoft.org/schema/mule/user-registration-system-api" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/user-registration-system-api http://www.mulesoft.org/schema/mule/user-registration-system-api/current/mule-user-registration-system-api.xsd">
+	<flow name="signUpFlow" doc:id="5b90b7ec-972d-4a71-b2d4-d0bd4cce394b" >
+		<logger level="INFO" doc:name="Logger" doc:id="1173fdf5-b553-4935-885d-61217e7c751b" message="started executing signUp flow"/>
+		<user-registration-system-api:create-signup doc:name="Create signup" doc:id="e6829ba2-9f01-4d65-b470-ccb682565552" config-ref="User_registration_system_api_Config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="77783f4d-3456-4edb-adce-0b6b861b4a53" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="996bc664-0103-4eea-a9ec-7a8ea26ada32" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="8772f288-b19a-4136-ad41-7667bbefb696" message="finished executing postOrder flow"/>
+	</flow>
+</mule>

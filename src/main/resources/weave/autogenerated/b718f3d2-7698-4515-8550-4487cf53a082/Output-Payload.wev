@@ -1,0 +1,19 @@
+%dw 2.0
+
+type auto_b718f3d2_7698_4515_8550_4487cf53a082_Output_Payload = {
+  product: {
+    product: String, 
+    quantity: Number, 
+    _?: Any
+  }, 
+  address: {
+    country: String, 
+    city: String, 
+    street: String, 
+    state: String, 
+    _?: Any
+  }, 
+  username: String, 
+  _?: Any
+}
+

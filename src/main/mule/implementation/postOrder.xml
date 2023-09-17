@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce-order-process-api="http://www.mulesoft.org/schema/mule/salesforce-order-process-api" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce-order-process-api http://www.mulesoft.org/schema/mule/salesforce-order-process-api/current/mule-salesforce-order-process-api.xsd">
+	<flow name="postOrderFlow" doc:id="b718f3d2-7698-4515-8550-4487cf53a082" >
+		<logger level="INFO" doc:name="Logger" doc:id="6927d250-525d-4fd3-931a-950217abcbf3" message="started executing postOrder flow"/>
+		<salesforce-order-process-api:create-order doc:name="Create order" doc:id="e22cfbad-4236-4ae8-8145-8b602cfb143d" config-ref="Salesforce_order_process_api_Config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9829730f-6c88-4041-bd60-dbe29660d7ad" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="ed9a3de8-c99a-47a2-9b9b-69097ee3ba97" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="b56c6a4e-3612-4596-bad5-658b5f14a854" message="finished executing postOrder flow"/>
+	</flow>
+</mule>

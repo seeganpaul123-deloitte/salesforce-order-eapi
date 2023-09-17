@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+    <http:listener-config name="salesforce-order-experience-api-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    <apikit:config name="salesforce-order-experience-api-config" api="resource::b8cf1f1a-23fa-40f7-b53f-64bac8e0dba3:salesforce-order-experience-api:1.0.0:raml:zip:salesforce-order-experience-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <flow name="salesforce-order-experience-api-main">
+        <http:listener config-ref="salesforce-order-experience-api-httpListenerConfig" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="salesforce-order-experience-api-config" />
+    </flow>
+    <flow name="salesforce-order-experience-api-console">
+        <http:listener config-ref="salesforce-order-experience-api-httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="salesforce-order-experience-api-config" />
+    </flow>
+    <flow name="get:\order\(username):salesforce-order-experience-api-config">
+        <flow-ref doc:name="Flow Reference" doc:id="44fed5b3-4fbc-4c7c-a8c1-1c103082a1d1" name="getOrderFlow"/>
+    </flow>
+    <flow name="post:\login:application\json:salesforce-order-experience-api-config">
+        <flow-ref doc:name="Flow Reference" doc:id="d4431352-e905-4a06-915b-c890c625a60d" name="loginFlow"/>
+    </flow>
+    <flow name="post:\order:application\json:salesforce-order-experience-api-config">
+        <flow-ref doc:name="Flow Reference" doc:id="df4d60a9-74b4-4db6-8fe5-6ab0e99d15ef" name="postOrderFlow"/>
+    </flow>
+    <flow name="post:\sendOTP:application\json:salesforce-order-experience-api-config">
+        <flow-ref doc:name="Flow Reference" doc:id="65a11bfc-c9f8-42fb-9577-fde786e6cd15" name="sendOTPFlow"/>
+    </flow>
+    <flow name="post:\signup:application\json:salesforce-order-experience-api-config">
+        <flow-ref doc:name="Flow Reference" doc:id="a536cb63-0949-4ce0-8fd2-bba19862f6af" name="signUpFlow"/>
+    </flow>
+</mule>

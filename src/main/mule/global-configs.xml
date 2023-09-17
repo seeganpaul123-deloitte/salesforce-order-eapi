@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce-order-process-api="http://www.mulesoft.org/schema/mule/salesforce-order-process-api" xmlns:user-registration-system-api="http://www.mulesoft.org/schema/mule/user-registration-system-api"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/user-registration-system-api http://www.mulesoft.org/schema/mule/user-registration-system-api/current/mule-user-registration-system-api.xsd
+http://www.mulesoft.org/schema/mule/salesforce-order-process-api http://www.mulesoft.org/schema/mule/salesforce-order-process-api/current/mule-salesforce-order-process-api.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="10b96a1c-47f2-455c-a8e7-c4ce5cb8f0e4" file="config.yaml" />
+	<user-registration-system-api:config name="User_registration_system_api_Config" doc:name="User-registration-system-api Config" doc:id="1aafda66-a817-4e4f-a44b-d753cb15d596" property_host="${api.user}" property_port="${api.port}" property_protocol="${api.protocol}" property_basePath="${api.basepath}" />
+	<salesforce-order-process-api:config name="Salesforce_order_process_api_Config" doc:name="Salesforce-order-process-api Config" doc:id="2c8a5cd0-3efe-4fbb-b1bb-46db526616ef" property_host="${api.process}" property_port="${api.port}" property_protocol="${api.protocol}" property_basePath="${api.basepath}" />
+	<configuration doc:name="Configuration" doc:id="906f14a3-9a34-47c9-993b-b6f7d4b9ff47" defaultErrorHandler-ref="global-errorhandler" />
+</mule>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce-order-process-api="http://www.mulesoft.org/schema/mule/salesforce-order-process-api" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce-order-process-api http://www.mulesoft.org/schema/mule/salesforce-order-process-api/current/mule-salesforce-order-process-api.xsd">
+	<flow name="sendOTPFlow" doc:id="52565ffe-7789-456e-a805-3792c1ad0e07" >
+		<logger level="INFO" doc:name="Logger" doc:id="41d75825-f401-473d-8070-c0b441f5f57e" message="started executing sendOTP flow"/>
+		<salesforce-order-process-api:create-send-otp doc:name="Create send otp" doc:id="9804312d-5fa2-4111-8350-a65001000aea" config-ref="Salesforce_order_process_api_Config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f742e262-c503-4929-a5cb-6723c38e8721" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="0fc092af-16d9-43f4-8a3f-dcc2ee89fcfb" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="e97f4a0f-3655-478a-afde-29496c72c97d" message="finished executing sendOTP flow"/>
+	</flow>
+</mule>

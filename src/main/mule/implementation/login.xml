@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:user-registration-system-api="http://www.mulesoft.org/schema/mule/user-registration-system-api" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/user-registration-system-api http://www.mulesoft.org/schema/mule/user-registration-system-api/current/mule-user-registration-system-api.xsd">
+	<flow name="loginFlow" doc:id="32cfb95c-25ff-4bde-9240-621a7744dfe0" >
+		<logger level="INFO" doc:name="Logger" doc:id="604ba821-a7be-4999-8479-5597228224ee" message="started executing login flow"/>
+		<user-registration-system-api:create-login doc:name="Create login" doc:id="fba122ef-2618-4b72-bfb0-c43bdc110532" config-ref="User_registration_system_api_Config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="4b914e97-2af9-4804-8543-388314dc688b" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="1d31f8b7-33f2-410d-809f-caf31004afe9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="85074567-af84-4df0-8b64-e3d6b356fdf7" message="finished executing login flow"/>
+	</flow>
+</mule>
